@@ -1,8 +1,13 @@
 package controller;
 
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -14,9 +19,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
@@ -24,7 +27,7 @@ public class Demo {
 	@FXML TextField Barcode;
 	TextField text;
 	JTextField t1;
-	
+	JFXPanel p2;
 	// 1
 	public static void main(String[] args) {
 		initAndShowGUI();// Initializes the Swing GUI
@@ -42,18 +45,26 @@ public class Demo {
 		    JTable t1=new JTable(7, 15);
 		    t1.setBounds(25, 25, 400, 600);
 		    p1.add(t1);
+		    JMenuBar mb=new JMenuBar();  
+		    JMenu menu;
+		    JMenuItem i1, i2 ;
+		    menu=new JMenu("Menu");  
+	          i1=new JMenuItem("Item 1");  
+	          i2=new JMenuItem("Item 2");  
+	          menu.add(i1); menu.add(i2);  
+	          MenuItemListener menuItemListener = demo.new MenuItemListener();
+	          i1.addActionListener(menuItemListener);
+	          i2.addActionListener(menuItemListener);
+	          mb.add(menu);  
+	          f.setJMenuBar(mb);
 		    
 		    
 		    
-		    
-		    
-		    
-		    
-		    JFXPanel p2=new JFXPanel();  
-		    JTabbedPane tp=new JTabbedPane();  
+		    demo.p2=new JFXPanel();  
+		    JComponent tp=new JTabbedPane();  
 		    tp.setBounds(0,0,200,200);  
 		    tp.add("main",p1);  
-		    tp.add("visit",p2);  
+		    tp.add("visit",demo.p2);  
 		    f.add(tp);  
 		    f.setSize(757, 499);
 		    f.setVisible(true);  
@@ -64,7 +75,7 @@ public class Demo {
 			
 			@Override
 			public void run() {
-				demo.initFX(p2);
+				demo.initFX(demo.p2);
 
 			
 			}
@@ -90,7 +101,6 @@ public class Demo {
 	
 	private void initFX(JFXPanel fxPanel) {
 		// This method is invoked on the JavaFX thread
-		Group root = new Group();
 		Scene scene = null ;
 		text = new TextField();
 		
@@ -115,7 +125,13 @@ public class Demo {
 		System.out.println("Done Dona Done"+Barcode.getText());
 	}
 	
-	
+	class MenuItemListener implements ActionListener {
+		@Override
+		public void actionPerformed(java.awt.event.ActionEvent e) {
+			//demo.tp=demo.p2
+			
+		}    
+	   }
 	
 
 }
